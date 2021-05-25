@@ -1,0 +1,205 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid Vacine Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	
+
+</head>
+<script>
+
+    $(document).ready(function() {
+        const multiselect = new Set()
+      $('table [type="checkbox"]').each(function(i, chk) {
+        if (chk.checked) {
+            multiselect.add(chk.closest('tr').getAttribute('data-uid'));
+        }
+      });
+      $('table [type="checkbox"]').change(function() {
+        if(this.checked) {
+            multiselect.add(this.closest('tr').getAttribute('data-uid'));
+           
+            document.getElementById('multiselect').value = Array.from(multiselect);
+        }else{
+            multiselect.delete(this.closest('tr').getAttribute('data-uid'));
+            $('table [type="checkbox"]').each(function(i, chk) {
+        if (chk.checked) {
+            multiselect.add(chk.closest('tr').getAttribute('data-uid'));
+            console.log(multiselect);
+        }
+      });
+            document.getElementById('multiselect').value = Array.from(multiselect);
+        }
+
+       
+    });
+});
+        
+    </script>
+
+<body style="background-color: #152238;">
+    <div class="container">
+        <div class= "header">
+            <h1>Covid Vacine Portal</h1>
+        </div>
+        <hr/> 
+    
+    
+         <div class="float-right">
+            <span class="labelFont labelColor">Welcome <%=patient.NAME%> <%=patient.LASTNAME%></span>
+            <a href="/"><button type="button" class="btn btn-lg">Logout</button></a>
+        </div>
+<br/>
+        <div  class="row">
+
+            <%if(patientAppRecords !== undefined ){%>
+                <div class= "header labelColor">
+                    <h3>Appointment Details</h3>
+                </div>
+            <%if(patientAppRecords.APP_STATUS == "declined"){%>
+                <h3 class="labelColor">Sorry! We Do not have any appointment available to your preference. <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#updatePreference">Update Preference</button></h3>
+                
+            <%}else if(patientAppRecords.APP_STATUS == "confirm"){%>
+                <h3 class="labelColor">Congrats! you have completed your vaccination dose</h3>
+            <%}else if(patientAppRecords.APP_STATUS == "sent"){%>
+                <h3 class="labelColor">Please find your appointment details</h3>
+                <div class="col-sm-12">
+                <table id ="appointmentDetails">
+                    <tr>
+                        <td class="labelFont labelColor">Provider Details</td>
+                        <td class="labelFont labelColor">Appointment Time</td>
+                        <td class="labelFont labelColor">Acceptance Deadline</td>
+                        <td class="labelFont labelColor">Distance</td>
+                        <td class="labelFont labelColor">Application Status</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="labelFont labelColor"><%=patientAppRecords.NAME%> <br/> <%=patientAppRecords.APT%>  <%=patientAppRecords.STREET%>  <%=patientAppRecords.CITY%> <%=patientAppRecords.STATE%> <%=patientAppRecords.ZIP_CODE%> <br/>Phone : <%=patientAppRecords.PHONE_NUMBER%> </td>
+                        <td class="labelFont labelColor"><%=patientAppRecords.APP_TIME%></td>
+                        <td class="labelFont labelColor"><%=patientAppRecords.ACCEPTANCE_DEADLINE%></td>
+                        <td class="labelFont labelColor"><%=patientAppRecords.DISTANCE%> KM</td>
+                        <form action="/appConfimrDecline" method="post" >
+                        <input type="hidden"   class="form-control input-lg" placeholder="Select Date of Birth" id="patientAppRecords" name ="patientAppRecords" value='<%-JSON.stringify(patientAppRecords)%>' required>
+                        <td class="labelFont labelColor"><button type="submit" name="submit" value="accepted" class="btn btn-success btn-lg">Accept</button> <br/><button type="submit" name="submit" value="declined" class="btn btn-primary btn-lg">Decline</button></td>
+                        </form>
+                    </tr>
+                </table>
+            </div>
+
+            <%}else if(patientAppRecords.APP_STATUS == "accepted"){%>
+                <h3 class="labelColor">Please find your appointment details</h3>
+                <div class="col-sm-12">
+                <table id ="appointmentDetails">
+                    <tr>
+                        <td class="labelFont labelColor">Appointment Time</td>
+                        <td class="labelFont labelColor">Acceptance Deadline</td>
+                        <td class="labelFont labelColor">Application Status</td>
+                    </tr>
+                    <tr>
+                        <td class="labelFont labelColor"><%=patientAppRecords.APP_TIME%></td>
+                        <td class="labelFont labelColor"><%=patientAppRecords.ACCEPTANCE_DEADLINE%></td>
+                        <form action="/appConfimrDecline" method="post" >
+                        <input type="hidden"   class="form-control input-lg" placeholder="Select Date of Birth" id="patientAppRecords" name ="patientAppRecords" value='<%-JSON.stringify(patientAppRecords)%>' required>
+                        <td class="labelFont labelColor"><button type="submit" name="submit" value="declined" class="btn btn-primary btn-lg">Decline</button></td>
+                        </form>
+                    </tr>
+                </table>
+            </div>
+
+            <%}%>    
+           
+               
+            <%}else{%>
+                <h3 class="labelColor">Sorry! We Do not have any appointment available to your preference. <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#updatePreference">Update Preference</button></h3>
+            <%}%>
+
+        </div>
+
+        <div class="row collapse" id="updatePreference"> 
+            <div class="col-sm-12">
+
+                <div class= "header labelColor">
+                    <h3>Preference Details</h3>
+                </div>
+            <form action="/addPreference" method="post" novalidate>
+                <input type="hidden"   class="form-control input-lg"  id="patient" name ="patient" value='<%-JSON.stringify(patient)%>'/>
+                <input type="hidden"   class="form-control input-lg"  id="multiselect" name ="multiselect" />
+                <table id ="tablePreference"  >
+                    <tr>
+                        <td class="labelFont labelColor">Day of the week</td>
+                        <td class="labelFont labelColor">Morning <br/>  <span >8:00  - 11:59</span></td>
+                        <td class="labelFont labelColor">Afternoon <br/> <span> 12:00 - 16:00  </span></i></td>
+                        <td class="labelFont labelColor">Evening <br/> <span > 16:00  - 19:59</span></i></td>
+                        <td class="labelFont labelColor">Night <br/>  <span > 19:59 - 24:00</span></i> </td>
+                    </tr>
+                    <tr id="Sunday" data-uid="Sunday">
+                        <td class="labelFont labelColor">Sunday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y"  id="s_morning" name="s_morning" <%= typeof preference_choice['Sunday'] == "undefined"? "" : preference_choice['Sunday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y"  id="s_morning"  name="s_afternoon" <%= typeof preference_choice['Sunday'] == "undefined"? "" : preference_choice['Sunday']['Afternoon'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" name="s_evening" <%= typeof preference_choice['Sunday'] == "undefined"? "" : preference_choice['Sunday']['Evening'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" name="s_night" <%= typeof preference_choice['Sunday'] == "undefined"? "" :  preference_choice['Sunday']['Night'] =='Y' ? "checked" : "" %> /></td>
+                    </tr>
+                    <tr id="Monday" data-uid="Monday">
+                        <td class="labelFont labelColor">Monday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_morning"  name="m_morning" <%= typeof preference_choice['Monday'] == "undefined"? "" : preference_choice['Monday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_afternoon"  name="m_afternoon"  <%= typeof preference_choice['Monday'] == "undefined"? "" : preference_choice['Monday']['Afternoon'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_evening"  name="m_evening" <%= typeof preference_choice['Monday'] == "undefined"? "" : preference_choice['Monday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_night"  name="m_night" <%= typeof preference_choice['Monday'] == "undefined"? "" : preference_choice['Monday']['Night'] =='Y' ? "checked" : "" %>/></td>
+                    
+                    </tr>
+                    <tr id="Tuesday" data-uid="Tuesday">
+                        <td class="labelFont labelColor">Tuesday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_morning"  name="t_morning" <%= typeof preference_choice['Tuesday'] == "undefined"? "" : preference_choice['Tuesday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_afternon"  name="t_afternoon" <%= typeof preference_choice['Tuesday'] == "undefined"? "" :  preference_choice['Tuesday']['Afternoon'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_night"  name="t_evening" <%= typeof preference_choice['Tuesday'] == "undefined"? "" : preference_choice['Tuesday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_night"  name="t_night" <%= typeof preference_choice['Tuesday'] == "undefined"? "" : preference_choice['Tuesday']['Night'] =='Y' ? "checked" : "" %>/></td>
+
+                    </tr>
+                    <tr id="Wednesday" data-uid="Wednesday">
+                        <td class="labelFont labelColor">Wednesday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_morning"  name="w_morning" <%= typeof preference_choice['Wednesday'] == "undefined"? "" : preference_choice['Wednesday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_afternoon"  name="w_afternoon" <%= typeof preference_choice['Wednesday'] == "undefined"? "" : preference_choice['Wednesday']['Afternoon'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_evening"  name="w_evening" <%= typeof preference_choice['Wednesday'] == "undefined"? "" : preference_choice['Wednesday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_night"  name="w_night" <%= typeof preference_choice['Wednesday'] == "undefined"? "" : preference_choice['Wednesday']['Night'] =='Y' ? "checked" : "" %>/></td>
+
+                    </tr>
+                    <tr id="Thursday" data-uid="Thursday">
+                        <td class="labelFont labelColor">Thursday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_morning"  name="tr_morning" <%= typeof preference_choice['Thursday'] == "undefined"? "" : preference_choice['Thursday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_afternoon"  name="tr_afternoon" <%= typeof preference_choice['Thursday'] == "undefined"? "" : preference_choice['Thursday']['Afternoon'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_evening"  name="tr_evening" <%= typeof preference_choice['Thursday'] == "undefined"? "" : preference_choice['Thursday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_night"  name="tr_night" <%= typeof preference_choice['Thursday'] == "undefined"? "" : preference_choice['Thursday']['Night'] =='Y' ? "checked" : "" %>/></td>
+
+                    </tr>
+                    <tr id="Friday" data-uid="Friday">
+                        <td class="labelFont labelColor">Friday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_morning" name="f_morning" <%= typeof preference_choice['Friday']   == "undefined"? "" : preference_choice['Friday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_afternoon" name="f_afternoon" <%= typeof preference_choice['Friday'] == "undefined"? "" : preference_choice['Friday']['Afternoon'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_evening" name="f_evening" <%= typeof preference_choice['Friday'] == "undefined"? "" : preference_choice['Friday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_night" name="f_night" <%= typeof preference_choice['Friday'] == "undefined"? "" : preference_choice['Friday']['Night'] =='Y' ? "checked" : "" %>/></td>
+
+                    </tr>
+                    <tr id="Saturday" data-uid="Saturday">
+                        <td class="labelFont labelColor">Saturday</td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_morning" name="st_morning" <%= typeof preference_choice['Saturday'] == "undefined"? "" : preference_choice['Saturday']['Morning'] =='Y' ? "checked" : "" %> /></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_afternoon" name="st_afternoon" <%= typeof preference_choice['Saturday'] == "undefined"? "" : preference_choice['Saturday']['Afternoon'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_evening" name="st_evening" <%= typeof preference_choice['Saturday'] == "undefined"? "" : preference_choice['Saturday']['Evening'] =='Y' ? "checked" : "" %>/></td>
+                        <td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_night" name="st_night" <%= typeof preference_choice['Saturday'] == "undefined"? "" : preference_choice['Saturday']['Night'] =='Y' ? "checked" : "" %>/></td>
+                    </tr>
+                </table>
+            <br/>
+                <button type="submit" class="btn  btn-primary btn-lg float-right" id="SubmitForm">Save</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

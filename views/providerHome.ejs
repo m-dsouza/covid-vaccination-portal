@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid Vacine Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<!--    <script src="../node_modules/js-datepicker/dist/datepicker.min.js" type="text/javascript"></script> 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="../node_modules/js-datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
+  <link href="/node_modules/jquery-datetimepicker/jquery.datetimepicker.css" rel="stylesheet">
+  <script src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+
+    
+	
+
+</head>
+
+
+
+
+<body style="background-color: #152238;">
+    <div class="container">
+        <div class= "header">
+            <h1>Covid Vacine Portal</h1>
+        </div>
+        <hr/> 
+    
+    
+        <div class="row">
+            <div class="float-right">
+                <span class="labelFont labelColor">Welcome <%=provider.NAME%> </span>
+                <a href="/"><button type="button" class="btn btn-lg">Logout</button></a>
+            </div>
+        </div>
+        <br/>
+        <div class="row"> 
+            <button type="button" class="btn btn-lg float-left" data-toggle="collapse"  data-target="#AppointmentDiv"">Add Appointment</button> 
+        </div>
+        <div class="row">
+            <form action="/appointmentDetails" method="post" novalidate>
+                <div  class="collapse" id="AppointmentDiv">
+                    <div class="col-sm-6">
+                            <input type="hidden"   class="form-control input-lg" placeholder="Select Date of Birth" id="provider" name ="provider" value='<%-JSON.stringify(provider)%>' required>
+                           
+                            <div class="form-group">
+                                <label class="labelFont labelColor" for="Appointment Time"><b>Appointment Time :</b></label>
+                                <input type="text"   class="form-control input-lg" placeholder="Select Date of Birth" id="datetimepicker" name ="appointmentTime" required>
+                            </div>
+                            <script>
+                                jQuery( "#datetimepicker" ).datetimepicker({
+                                    'minTime': '08:00',
+                                     'minDate' : new Date(),
+                                });
+                            </script>
+                    </div> 
+
+                    <div class="col-sm-6">
+                        <div class="form-group float-left">
+                            <div></div>
+                            <button type="submit" class="btn  btn-lg" >Submit</button>
+                            <button type="reset" class="btn   btn-lg" >Reset</button>
+                        </div>
+                     </div>
+                 </div>
+            </form>
+        
+        </div>
+
+        <div class="row">
+            <h3 class="labelFont labelColor"> Appointment Details</h3>
+            <hr/>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id ="tablePreference">
+                    <thead>
+                        <tr>
+                            <td class="labelFont labelColor">Appointment Id</td>
+                            <td class="labelFont labelColor">Appointment Time</td>
+                            <td class="labelFont labelColor">Appointment Status</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i in app_id,APP_TIME,APP_STATUS){%>
+                        <tr>
+                            <td class="labelFont labelColor"><%=app_id[i]%></td>
+                            <td class="labelFont labelColor"><%= APP_TIME[i]%></td>
+                            <td class="labelFont labelColor"><%=APP_STATUS[i]%></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+       
+    
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<script>
+    $(document).ready(function() {
+    $('#tablePreference').DataTable();
+} );
+</script>
+</html>

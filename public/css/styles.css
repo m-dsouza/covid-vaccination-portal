@@ -1,0 +1,174 @@
+body {
+    margin: 20px;
+}
+
+.row {
+    text-align: center;
+}
+.header h1,h3, p{
+    text-align: center;
+	color: white;
+}
+
+h2{
+    text-align: left;
+	color: white;
+}
+
+#transcript {
+    margin: 10px 0;
+    white-space: pre-wrap;
+    height: 80px;
+}
+#file_path{
+    display: inline-flex;
+    width: auto;
+}
+
+#start-button,
+#stop-button,
+#reset-button {
+    margin: 5px 0;
+    height: 30px;
+    line-height: normal;
+}
+
+#error {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.4rem;
+    border-radius: 5px 5px 5px 5px;
+    color: #D8000C;
+    background-color: #FFD2D2;
+    display: none;
+}
+
+.isa_error i {
+    margin: 2px 12px;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+/* 
+#logo {
+    height: 52px;
+} */
+
+/* #github {
+    fill: #146eb4;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    border: 0;
+    right: 0;
+} */
+
+.small-caps {
+    font-variant: small-caps;
+}
+
+table{
+  border: 1px solid white;
+  margin: 2px 12px;
+  font-size: 1em;
+  vertical-align: middle;
+  text-align: center;
+  width:100%;
+}
+
+th, td {
+    border: 1px solid white;
+    margin: 2px 12px;
+    font-size: 1em;
+    vertical-align: middle;
+    text-align: center;
+    height: 70px;
+  }
+
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.float-right{
+	float:right;
+}
+
+.labelFont{
+	font-size: 1.5em;
+}
+
+.labelColor{
+	color:white;
+}
+.float-left{
+    float:left;
+}
+
+.labelColor-black{
+	color:rgb(24, 23, 23);
+}
+.checkbox1{
+    zoom: 2;
+}
+.icon {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .fa-info-circle:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .dataTables_length {
+    color: #fff;
+    float: left;
+
+    }
+    
+    .dataTables_filter  {
+        color: #fff;
+        float: right;
+    }
+
+    .dataTables_filter input {
+        color: black;
+        float: right;
+    }
+
+    #tablePreference_info{
+        color: #fff;
+        float: left;
+    }
+
+
+    .paginate_button {
+    color:#fff;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 6px;
+    }
+
+   
+
+    #tablePreference_paginate{
+        float: right;
+        
+     }

@@ -1,0 +1,449 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid Vacine Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+	
+
+</head>
+
+<script>
+
+
+
+
+$(function() {
+	
+    $('#patient_tabs').hide(); 
+	$('#preference_tabs').hide(); 
+	$('#provider_tabs').hide(); 
+	$('#address').hide(); 
+	$('#tablePreference').hide(); 
+	$('#Sunday').hide(); 
+	$('#Monday').hide(); 
+	$('#Tuesday').hide(); 
+	$('#Wednesday').hide(); 
+	$('#Thursday').hide(); 
+	$('#Friday').hide(); 
+	$('#Saturday').hide(); 	
+
+	
+	
+    $('#selectGrp').change(function(){
+        if($('#selectGrp').val() == 'patient') {
+            $('#patient_tabs').show(); 
+			$('#preference_tabs').show(); 
+			$('#address').show(); 
+			$('#provider_tabs').hide(); 
+
+			$("#provider_tabs :input").prop("required", false);
+			$("#patient_tabs :input").prop("required", true);
+			//$("#preference_tabs :input").prop("required", true);
+			
+        }else if($('#selectGrp').val() == 'provider') {
+            $('#provider_tabs').show(); 
+			$('#address').show(); 
+			$('#patient_tabs').hide(); 
+			$('#preference_tabs').hide(); 
+			$("#patient_tabs :input").prop("required", false);
+			$("#preference_tabs :input").prop("required", false);
+			$("#provider_tabs :input").prop("required", true);
+			
+        } else {
+           $('#patient_tabs').hide(); 
+		   $('#provider_tabs').hide(); 
+		   $('#address').hide();
+		   $('#preference_tabs').hide(); 
+        } 
+    });
+
+	
+});
+
+
+
+</script>
+<!--#152238 navy #581845 -- plum-->
+<body style="background-color: #152238;">
+
+    <div class="container">
+       <div class= "header">
+        <h1>Covid Vacine Portal</h1>
+	   </div>
+        <hr/> 
+		<span class="labelFont labelColor"><%= errorMsg %></span>
+	 <div class="float-right">
+		<button type="button" class="btn btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
+		<button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#registerDiv" >Register</button>
+	</div>
+
+	  
+
+  <div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">Login Console</h1>
+        </div>
+        <div class="modal-body ">
+		<form action="/query" method="post">
+			<div class="form-group">
+			  <label class="labelFont" for="lusername"><b>Username:</b></label>
+			  <input type="text"  class="form-control input-lg" placeholder="Enter Username" name="lusername" required>
+			</div>
+			
+			<div class="form-group">
+			
+			  <label lass="labelFocnt" for="lpwd"><b> Password:</b></label>
+			  <input type="password"  class="form-control input-lg" placeholder="Enter Password" name="lpwd" required>
+			</div>
+			<button type="submit" class="btn  btn-primary btn-lg" >Login</button>
+			<button type="reset" class="btn  btn-primary btn-lg" >Reset</button>
+		</form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-lg " data-dismiss="modal">Close</button>
+        </div>-->
+      </div>
+
+    </div>
+	</div>
+	
+	<div class="collapse" id="registerDiv">
+	<form action="/register" method="post" >
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					 <label class="labelFont labelColor" for="selectGrp">User Group(Please select one):</label>
+					  <select class="form-control input-lg " id="selectGrp" name="selectGrp">
+						<option name="" value=""></option>
+						<option name="patient" value="patient">Patient</option>
+						<option name="provider" value="provider">Provider</option>
+					  </select>
+				</div>
+			</div>
+			<div class="col-sm-6">
+			</div>
+		</div>
+		</br>
+		
+		<fieldset>
+		<legend class="labelColor">Login Credentials:</legend>
+		<div class="row">
+		
+		
+			<div class="col-sm-4">
+				<div class="form-group">
+				  <label class="labelFont labelColor" for="r_username"><b>Username:</b></label>
+				  <input type="text"  class="form-control input-lg" placeholder="Enter Username" name="r_username" required>
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<div class="form-group">
+				
+				  <label class="labelFont labelColor" for="r_pwd"><b> Password:</b></label>
+				  <input type="password"  class="form-control input-lg" placeholder="Enter Password" name="r_pwd" required>
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<div class="form-group">
+				
+				  <label class="labelFont labelColor" for="confirmPwd"><b> Confirm Password:</b></label>
+				  <input type="password"  class="form-control input-lg" placeholder="Please Confirm Password" name="confirmPwd" required>
+				</div>
+			</div>
+		
+		</div>
+		</fieldset>
+		<fieldset id="provider_tabs">
+		<legend class="labelColor">Provider Details:</legend>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="pName"><b>Name:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Name" name="pName" required/>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+					 <label class="labelFont labelColor" for="provider_type">Provider Type:</label>
+					  <select class="form-control input-lg " id="provider_type" name="provider_type">
+						<option></option>
+						<option>School</option>
+						<option>Hospital</option>
+						<option>Pharmacy</option>
+						<option>Others</option>
+					  </select>
+				</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="p_phnNumber"><b>Phone number:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Phone number" name="p_phnNumber" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="p_email"><b>Email Address:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Email Address" name="p_email" required >
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset id="patient_tabs">
+		<legend class="labelColor">Personal Details:</legend>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="firstName"><b>First Name:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter First Name" name="firstName" required/>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="lastName"><b>Last Name:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Last Name" name="lastName" required/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="ssn"><b>SSN:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter SSN" name="ssn" required>
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="dob"><b>Date of Birth:</b></label>
+					  <input type="date"   class="form-control input-lg" placeholder="Select Date of Birth"  name="dob" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="phnNumber"><b>Phone number:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Phone number" name="phnNumber" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="email"><b>Email Address:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Email Address" name="email" required>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		
+		
+		
+		
+		
+		
+		<fieldset id="address">
+		<legend class="labelColor">Address Details:</legend>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="apt"><b>Apt:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Apartment Number" name="apt" required>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="street"><b>Street:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Street Details" name="street" required>
+					</div>
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="city"><b>City:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter City" name="city" required>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="state"><b>State:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Select State" name="state" required>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+					  <label class="labelFont labelColor" for="zipCode"><b>ZipCode:</b></label>
+					  <input type="text"  class="form-control input-lg" placeholder="Enter Email Address" name="zipCode" required>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset id="preference_tabs">
+		<legend class="labelColor">Preference:</legend>
+			<div class="form-group">
+			  <label class="labelFont labelColor" for="pf_distance"><b>Preferred Distance:</b></label>
+			  <input type="text"  class="form-control input-lg" placeholder="Enter Preferred Distance" name="pf_distance" required>
+
+			  
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-6">
+
+					<div class="form-group">
+						<label class="labelFont labelColor float-left" for="pf_time"><b>Preferred Time Slots:</b></label>
+						
+						
+						
+						<select id="multiselect" multiple="multiple" name="multiselect[]">
+							<option name="Sunday" value="Sunday">Sunday</option>
+							<option name="Monday" value="Monday">Monday</option>
+							<option name="Tuesday" value="Tuesday">Tuesday</option>
+							<option name="Wednesday" value="Wednesday">Wednesday</option>
+							<option name="Thursday" value="Thursday">Thursday</option>
+							<option name="Friday" value="Friday">Friday</option>
+							<option name="Saturday" value="Saturday">Saturday</option>
+
+						</select>
+						<h2>
+							<span class="labelColor">Note:</span>	<br/>
+							<span class="labelColor">Morning : 8:00  - 11:59</span><br/>
+							<span class="labelColor">Afternoon : 12:00 - 16:00  </span><br/>
+							<span class="labelColor">Evening : 16:00  - 19:59</span><br/>
+							<span class="labelColor">Night : 19:59 - 24:00</span><br/>
+						</h2>
+						<script>
+							
+							$("#multiselect").multiselect({
+								
+								buttonClass: 'btn btn-lg',
+								onChange: function(element, checked) {
+
+								
+									if($("#multiselect :selected").length>0){
+										$('#tablePreference').show();
+										
+									}else{
+										$('#tablePreference').hide();
+									}
+        							
+									if (checked === true) {
+										
+										$('#'+element.val()).show(); 
+										$('#'+element.val() +' :checkbox').prop("checked", true);
+									}
+									else if (checked === false) {
+										$('#'+element.val()).hide(); 
+									}
+									
+       							 }
+							});
+							
+						</script>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<table id ="tablePreference">
+						<tr>
+							<td class="labelFont labelColor">Day of the week</td>
+							<td class="labelFont labelColor">Morning</td>
+							<td class="labelFont labelColor">Afternoon</td>
+							<td class="labelFont labelColor">Evening</td>
+							<td class="labelFont labelColor">Night</td>
+						</tr>
+						<tr id="Sunday">
+							<td class="labelFont labelColor">Sunday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="s_morning" name="s_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="s_morning"  name="s_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="s_evening"  name="s_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="s_night"  name="s_night"></td>
+						</tr>
+						<tr id="Monday">
+							<td class="labelFont labelColor">Monday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_morning"  name="m_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_afternoon"  name="m_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_evening"  name="m_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="m_night"  name="m_night"></td>
+						
+						</tr>
+						<tr id="Tuesday">
+							<td class="labelFont labelColor">Tuesday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_morning"  name="t_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_afternon"  name="t_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_night"  name="t_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="t_night"  name="t_night"></td>
+
+						</tr>
+						<tr id="Wednesday">
+							<td class="labelFont labelColor">Wednesday</td>
+							<td> <input class="form-check-input checkbox1"  type="checkbox"  value="Y" id="w_morning"  name="w_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_afternoon"  name="w_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_evening"  name="w_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="w_night"  name="w_night"></td>
+
+						</tr>
+						<tr id="Thursday">
+							<td class="labelFont labelColor">Thursday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_morning"  name="tr_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_afternoon"  name="tr_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_evening"  name="tr_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="tr_night"  name="tr_night"></td>
+
+						</tr>
+						<tr id="Friday">
+							<td class="labelFont labelColor">Friday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_morning" name="f_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_afternoon" name="f_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_evening" name="f_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="f_night" name="f_night"></td>
+
+						</tr>
+						<tr id="Saturday">
+							<td class="labelFont labelColor">Saturday</td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_morning" name="st_morning"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_afternoon" name="st_afternoon"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_evening" name="st_evening"></td>
+							<td> <input class="form-check-input checkbox1" type="checkbox"  value="Y" id="st_night" name="st_night"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</fieldset>	
+			
+			
+			
+			<button type="submit" class="btn  btn-primary btn-lg" >Submit</button>
+			<button type="reset" class="btn  btn-primary btn-lg" >Reset</button>
+		</form>
+	</div>
+
+
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>

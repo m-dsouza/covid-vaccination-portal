@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid Vacine Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	
+
+</head>
+<script>
+
+    $(document).ready(function() {
+
+            
+       
+    
+    });
+        
+    </script>
+
+<body style="background-color: #152238;">
+    <div class="container">
+        <div class= "header">
+            <h1>Covid Vacine Portal</h1>
+        </div>
+        <hr/> 
+    
+    
+         <div class="float-right">
+            <span class="labelFont labelColor">Welcome Admin</span>
+        </div>
+
+        <div class="row"> 
+            <div class="col-sm-12">
+
+                <div class= "header labelColor">
+                    <h3>Admin Portal</h3>
+                </div>
+                <div class="float-right" >
+                    <button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#priorityGrp">Priority Group Record</button>
+                    <button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#patientPending" >Patient Record</button>
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="collapse" id="priorityGrp">
+            <div class="row">
+                <h3 class="labelFont labelColor"> Priority Group Details</h3>
+                <hr/>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id ="tablePreference">
+                        <tr>
+                            <td class="labelFont labelColor">Patient Id</td>
+                            <td class="labelFont labelColor">Patient Id</td>
+                            <td class="labelFont labelColor">Age</td>
+                        </tr>
+                    
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse" id="patientPending">
+            <div class="row">
+                <h3 class="labelFont labelColor">Patients pending appointment</h3>
+                <hr/>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id ="tablePreference">
+                        <tr>
+                            <td class="labelFont labelColor">Patient Id</td>
+                            <td class="labelFont labelColor">Patient Id</td>
+                            <td class="labelFont labelColor">Priority Group</td>
+                        </tr>
+                    
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
